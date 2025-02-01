@@ -45,17 +45,16 @@ readonly class StockNotification
                 $this->product->name
             )
         };
-        return "Product \"{$this->product->name}\" has a critical stock level ({$this->product->stock}), which is below {$this->product->criticalStock}";
     }
 }
 interface InventoryTrackerInterface
 {
     public function processStockUpdate(Product $product): void;
-    public function addNotifier(CrititalStockNotifierInterface $notifier): void;
-    public function removeNotifier(CrititalStockNotifierInterface $notifier): void;
+    public function addNotifier(CriticalStockNotifierInterface $notifier): void;
+    public function removeNotifier(CriticalStockNotifierInterface $notifier): void;
 }
 
-interface CrititalStockNotifierInterface
+interface CriticalStockNotifierInterface
 {
     public function notify(StockNotification $message): void;
 }
@@ -91,18 +90,18 @@ class InventoryTracker implements InventoryTrackerInterface
         }
     }
 
-    public function addNotifier(CrititalStockNotifierInterface $notifier): void
+    public function addNotifier(CriticalStockNotifierInterface $notifier): void
     {
         $this->notifiers[spl_object_hash($notifier)] = $notifier;
     }
 
-    public function removeNotifier(CrititalStockNotifierInterface $notifier): void
+    public function removeNotifier(CriticalStockNotifierInterface $notifier): void
     {
         unset($this->notifiers[spl_object_hash($notifier)]);
     }
 }
 
-class PurchasingDepartmentNotifier implements CrititalStockNotifierInterface
+class PurchasingDepartmentNotifier implements CriticalStockNotifierInterface
 {
     public function notify(StockNotification $message): void
     {
@@ -110,7 +109,7 @@ class PurchasingDepartmentNotifier implements CrititalStockNotifierInterface
     }
 }
 
-class SupplierEmailNotifier implements CrititalStockNotifierInterface
+class SupplierEmailNotifier implements CriticalStockNotifierInterface
 {
     public function notify(StockNotification $message): void
     {
@@ -118,7 +117,7 @@ class SupplierEmailNotifier implements CrititalStockNotifierInterface
     }
 }
 
-class WebsiteUpdater implements CrititalStockNotifierInterface
+class WebsiteUpdater implements CriticalStockNotifierInterface
 {
     public function notify(StockNotification $message): void
     {
@@ -126,7 +125,7 @@ class WebsiteUpdater implements CrititalStockNotifierInterface
     }
 }
 
-class ManagerSmsNotifier implements CrititalStockNotifierInterface
+class ManagerSmsNotifier implements CriticalStockNotifierInterface
 {
     public function notify(StockNotification $message): void
     {
