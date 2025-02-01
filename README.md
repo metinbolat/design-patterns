@@ -44,7 +44,7 @@ Each pattern has its own directory containing multiple examples. I start with si
 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/design-patterns.git
+git clone https://github.com/metinbolat/design-patterns.git
 ```
 
 2. Navigate to a specific pattern's directory
